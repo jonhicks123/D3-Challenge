@@ -73,7 +73,8 @@ d3.csv("assets/data/data.csv").then(function(censusData, err) {
         .attr("cy", d => yLinearScale(d.healthcare))
         .attr("r", 8)
         .attr("fill", "pink")
-        .attr("opacity", ".5");
+        .attr("opacity", ".5")
+        .attr("stroke", "black");
     
     // Create tooltip
     var toolTip = d3.tip()
@@ -108,18 +109,18 @@ d3.csv("assets/data/data.csv").then(function(censusData, err) {
         .text("In Poverty (%)");
     
     // Add States to the circles
-    circlesGroup.append("text")
+    chartGroup.append("text")
     .attr("class", "states")
-    .style("font-size", "13px")
+    .style("font-size", "8px")
     .style("font-weight", "bold")
-    .selectAll("census")
+    .selectAll("tspan")
     .data(censusData)
     .enter()
-    .append("census")
-    .attr("xaxis", function(data) {
+    .append("tspan")
+    .attr("x", function(data) {
         return xLinearScale(data.poverty);
     })
-    .attr("yaxis", function(data) {
+    .attr("y", function(data) {
         return yLinearScale(data.healthcare);
     })
     .text(function(data) {
