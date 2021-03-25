@@ -45,8 +45,8 @@ d3.csv("assets/data/data.csv").then(function(censusData, err) {
 
     // Create y scale function
     var yLinearScale = d3.scaleLinear()
-        .domain([0, d3.max(censusData, d => d.healthcare) -5,
-        d3.max(censusData, d => d.healthcare) +5
+        .domain([0, d3.max(censusData, d => d.healthcare),
+        d3.max(censusData, d => d.healthcare) +10
         ])
         .range([height, 0]);
 
@@ -71,10 +71,10 @@ d3.csv("assets/data/data.csv").then(function(censusData, err) {
         .append("circle")
         .attr("cx", d => xLinearScale(d.poverty))
         .attr("cy", d => yLinearScale(d.healthcare))
-        .attr("r", 8)
-        .attr("fill", "pink")
+        .attr("r", 10)
+        .attr("fill", "aqua")
         .attr("opacity", ".5")
-        .attr("stroke", "black");
+        .attr("stroke", "white");
     
     // Create tooltip
     var toolTip = d3.tip()
@@ -98,14 +98,14 @@ d3.csv("assets/data/data.csv").then(function(censusData, err) {
     // Append axis labels for y and x axis
     chartGroup.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", 0 - margin.left)
+        .attr("y", 0 - margin.left + 20)
         .attr("x", 0 - (height / 2))
         .attr("dy", "1em")
         .classed("axis-text", true)
         .text("Lacks Healthcare (%)");
     
     chartGroup.append("text")
-        .attr("transform", `translate(${width / 2}, ${height + 25})`)
+        .attr("transform", `translate(${width / 2}, ${height + margin.top + 40})`)
         .text("In Poverty (%)");
     
     // Add States to the circles
@@ -118,10 +118,10 @@ d3.csv("assets/data/data.csv").then(function(censusData, err) {
     .enter()
     .append("tspan")
     .attr("x", function(data) {
-        return xLinearScale(data.poverty);
+        return xLinearScale(data.poverty - 0.15);
     })
     .attr("y", function(data) {
-        return yLinearScale(data.healthcare);
+        return yLinearScale(data.healthcare - 0.15);
     })
     .text(function(data) {
         return data.abbr
